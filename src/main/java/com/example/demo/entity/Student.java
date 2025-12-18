@@ -11,6 +11,16 @@ public class Student{
     private String name;
     private String department;
     private Integer year;
+
+    public Student() {
+    }
+    public Student(Long id, String rollNumber, String name, String department, Integer year) {
+        this.id = id;
+        this.rollNumber = rollNumber;
+        this.name = name;
+        this.department = department;
+        this.year = year;
+    }
     public Long getId() {
         return id;
     }
