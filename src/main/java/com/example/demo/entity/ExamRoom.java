@@ -10,6 +10,16 @@ public class ExamRoom{
     private String roomNumber;
     private Integer capacity;
     private Integer rows;
+
+    public ExamRoom() {
+    }
+    public ExamRoom(Long id, String roomNumber, Integer capacity, Integer rows, Integer columns) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.rows = rows;
+        this.columns = columns;
+    }
     public Long getId() {
         return id;
     }
