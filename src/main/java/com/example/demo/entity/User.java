@@ -31,10 +31,4 @@ public class User{
     public String getSTAFF() {
         return STAFF;
     }
-    @coloumn(unique=tue)
-    private String email;
-    private String password;
-    private String ADMIN;
-    private String STAFF
-    
 }
