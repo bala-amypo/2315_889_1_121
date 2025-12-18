@@ -1,9 +1,12 @@
 package com.example.demo.entity;
 
+
+
 public class User{
-    private Long Id;
+    @Id
+    private Long id;
     private String name;
     private String email;
     private String password;
-    private 
+    private String role;
 }
