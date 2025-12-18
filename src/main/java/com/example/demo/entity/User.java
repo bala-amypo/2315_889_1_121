@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
-import jakarta.persitence.Id;
+import jakarta.persistence.column;
+import jakarta.persistence.Id;
 
 public class User{
     @Id
