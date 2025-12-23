@@ -25,4 +25,18 @@ public class ExamRoomController {
     public List<ExamRoom> all() {
         return service.all();
     }
+    @GetMapping("/{id}")
+    public ExamRoom getById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ExamRoom update(@PathVariable Long id, @RequestBody ExamRoom room) {
+        return service.update(id, room);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
 }

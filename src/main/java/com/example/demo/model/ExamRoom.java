@@ -10,26 +10,33 @@ public class ExamRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "room_number", nullable = false, unique = true)
     private String roomNumber;
 
-    @Column(name = "row_count", nullable = false)
-    private Integer rowCount;
-
-    @Column(name = "column_count", nullable = false)
-    private Integer columnCount;
-
-    @Column(nullable = false)
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
-    @PrePersist
-    @PreUpdate
-    public void ensureCapacityMatches() {
-        this.capacity = this.rowCount * this.columnCount;
+    @Column(name = "floor")
+    private Integer floor;
+
+    // ✅ Required by JPA
+    public ExamRoom() {
     }
 
+    // Optional constructor
+    public ExamRoom(String roomNumber, Integer capacity, Integer floor) {
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.floor = floor;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRoomNumber() {
@@ -40,23 +47,19 @@ public class ExamRoom {
         this.roomNumber = roomNumber;
     }
 
-    public Integer getRowCount() {
-        return rowCount;
-    }
-
-    public void setRowCount(Integer rowCount) {
-        this.rowCount = rowCount;
-    }
-
-    public Integer getColumnCount() {
-        return columnCount;
-    }
-
-    public void setColumnCount(Integer columnCount) {
-        this.columnCount = columnCount;
-    }
-
     public Integer getCapacity() {
         return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
     }
 }
