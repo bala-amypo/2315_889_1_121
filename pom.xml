@@ -59,11 +59,11 @@
             <version>7.8.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- Added MySQL Connector Dependency -->
+        <!-- Updated MySQL Connector Dependency -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.3</version> <!-- Example version -->
+            <version>8.0.30</version> <!-- Updated to the correct version -->
         </dependency>
     </dependencies>
 
