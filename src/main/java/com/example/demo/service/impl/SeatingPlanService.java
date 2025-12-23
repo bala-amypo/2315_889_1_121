@@ -1,7 +1,7 @@
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import com.example.demo.model.SeatingPlan;
+// import com.example.demo.model.SeatingPlan;
 
-public interface SeatingPlanService {
-    SeatingPlan generate(Long sessionId);
-}
+// public interface SeatingPlanService {
+//     SeatingPlan generate(Long sessionId);
+// }

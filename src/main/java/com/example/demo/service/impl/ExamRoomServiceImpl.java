@@ -1,8 +1,8 @@
-package com.example.demo.service; // Ensure the package declaration is correct
+package com.example.demo.service.impl;
 
-import com.example.demo.exception.ApiException;
 import com.example.demo.model.ExamRoom;
 import com.example.demo.repository.ExamRoomRepository;
+import com.example.demo.service.ExamRoomService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,28 +10,41 @@ import java.util.List;
 @Service
 public class ExamRoomServiceImpl implements ExamRoomService {
 
-    private final ExamRoomRepository repo;
+    private final ExamRoomRepository repository;
 
-    public ExamRoomServiceImpl(ExamRoomRepository repo) {
-        this.repo = repo;
+    public ExamRoomServiceImpl(ExamRoomRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public ExamRoom add(ExamRoom r) {
-        if (r.getRowCount() <= 0 || r.getColumnCount() <= 0) {
-            throw new ApiException("Invalid row or column count");
-        }
-
-        if (repo.findByRoomNumber(r.getRoomNumber()).isPresent()) {
-            throw new ApiException("Exam room already exists");
-        }
-
-        // capacity is auto-calculated by @PrePersist/@PreUpdate
-        return repo.save(r);
+    public ExamRoom add(ExamRoom room) {
+        return repository.save(room);
     }
 
     @Override
     public List<ExamRoom> all() {
-        return repo.findAll();
+        return repository.findAll();
+    }
+
+    @Override
+    public ExamRoom getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ExamRoom not found with id " + id));
+    }
+
+    @Override
+    public ExamRoom update(Long id, ExamRoom room) {
+        ExamRoom existing = getById(id);
+
+        existing.setRoomNumber(room.getRoomNumber());
+        existing.setCapacity(room.getCapacity());
+        existing.setFloor(room.getFloor());
+
+        return repository.save(existing);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
