@@ -10,6 +10,8 @@ public class ExamRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
     @Column(name = "room_number", nullable = false, unique = true)
     private String roomNumber;
 
