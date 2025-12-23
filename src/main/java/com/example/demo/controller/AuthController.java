@@ -1,30 +1,26 @@
-package com.example.demo.config;
+package com.example.demo.controller;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
-@Configuration
-public class SecurityConfig {
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
-            );
+    private final UserService userService;
 
-        return http.build();
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
-    
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
-    
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return "dummy-token";
+    }
 }
