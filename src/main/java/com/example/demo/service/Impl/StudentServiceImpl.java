@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service; // Ensure this is correct
 
 import com.example.demo.exception.ApiException;
 import com.example.demo.model.Student;
@@ -34,15 +34,4 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> all() {
         return repo.findAll();
     }
-}
-UserService.java
-package com.example.demo.service;
-
-import com.example.demo.model.User;
-
-public interface UserService {
-
-    User register(User user);
-
-    User findByEmail(String email);
 }

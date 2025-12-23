@@ -1,5 +1,4 @@
-ExamRoomServiceimpl.java
-package com.example.demo.service;
+package com.example.demo.service; // Ensure the package declaration is correct
 
 import com.example.demo.exception.ApiException;
 import com.example.demo.model.ExamRoom;
@@ -19,7 +18,6 @@ public class ExamRoomServiceImpl implements ExamRoomService {
 
     @Override
     public ExamRoom add(ExamRoom r) {
-
         if (r.getRowCount() <= 0 || r.getColumnCount() <= 0) {
             throw new ApiException("Invalid row or column count");
         }
