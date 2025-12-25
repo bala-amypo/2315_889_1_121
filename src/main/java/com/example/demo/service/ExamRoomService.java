@@ -1,18 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.ExamRoom;
-
 import java.util.List;
 
 public interface ExamRoomService {
 
-    ExamRoom add(ExamRoom room);
+    ExamRoom addRoom(ExamRoom examRoom);
 
-    List<ExamRoom> all();
-
-    ExamRoom getById(Long id);
-
-    ExamRoom update(Long id, ExamRoom room);
+    List<ExamRoom> getAllRooms();
 
     void delete(Long id);
 }
