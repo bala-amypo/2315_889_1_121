@@ -20,7 +20,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 // 👉 SERVER CONFIG (change port if needed)
                 .servers(List.of(
-                        new Server().url("https://9099.pro604cr.amypo.ai")
+                        new Server().url("https://9273.pro604cr.amypo.ai")
                 ))
 
                 // 👉 JWT SECURITY CONFIG
