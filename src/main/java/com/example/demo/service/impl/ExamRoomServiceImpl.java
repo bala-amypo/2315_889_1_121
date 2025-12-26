@@ -5,35 +5,34 @@ import com.example.demo.model.ExamRoom;
 import com.example.demo.repository.ExamRoomRepository;
 import com.example.demo.service.ExamRoomService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class ExamRoomServiceImpl implements ExamRoomService {
-    private final ExamRoomRepository examRoomRepository;
 
-    public ExamRoomServiceImpl(ExamRoomRepository examRoomRepository) {
-        this.examRoomRepository = examRoomRepository;
+    private final ExamRoomRepository repo;
+
+    public ExamRoomServiceImpl(ExamRoomRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public ExamRoom addRoom(ExamRoom room) {
-        if (examRoomRepository.findByRoomNumber(room.getRoomNumber()).isPresent()) {
-            throw new ApiException("Room with number already exists");
+        if (room.getRows() == null || room.getColumns() == null ||
+                room.getRows() <= 0 || room.getColumns() <= 0) {
+            throw new ApiException("Invalid room dimensions");
         }
-        
-        if (room.getRows() != null && room.getRows() < 1) {
-            throw new ApiException("Rows must be positive");
-        }
-        
-        if (room.getRows() != null && room.getColumns() != null) {
-            room.setCapacity(room.getRows() * room.getColumns());
-        }
-        
-        return examRoomRepository.save(room);
+
+        repo.findByRoomNumber(room.getRoomNumber())
+                .ifPresent(r -> { throw new ApiException("Room exists"); });
+
+        room.ensureCapacityMatches();
+        return repo.save(room);
     }
 
     @Override
     public List<ExamRoom> getAllRooms() {
-        return examRoomRepository.findAll();
+        return repo.findAll();
     }
 }
