@@ -4,24 +4,29 @@ import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/students")
 public class StudentController {
-    private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    private final StudentService service;
+
+    public StudentController(StudentService service) {
+        this.service = service;
     }
 
     @PostMapping
     public ResponseEntity<Student> add(@RequestBody Student student) {
-        return ResponseEntity.ok(studentService.addStudent(student));
+        return ResponseEntity.ok(service.addStudent(student));
     }
 
+    // 🔥 IMPORTANT FIX HERE
     @GetMapping
     public ResponseEntity<List<Student>> list() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+        return ResponseEntity.ok(service.getAllStudents());
     }
 }
