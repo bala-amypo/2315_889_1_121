@@ -2,22 +2,17 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SeatingPlan;
 import com.example.demo.service.SeatingPlanService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/plans")
-@RequiredArgsConstructor
+@RequestMapping("/api/seating-plans")
 public class SeatingPlanController {
-
     private final SeatingPlanService seatingPlanService;
 
-    @PostMapping("/generate/{sessionId}")
-    public ResponseEntity<SeatingPlan> generate(@PathVariable Long sessionId) {
-        return ResponseEntity.ok(seatingPlanService.generatePlan(sessionId));
+    public SeatingPlanController(SeatingPlanService seatingPlanService) {
+        this.seatingPlanService = seatingPlanService;
     }
 
     @GetMapping("/{id}")

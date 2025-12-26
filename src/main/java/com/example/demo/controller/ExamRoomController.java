@@ -2,14 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ExamRoom;
 import com.example.demo.service.ExamRoomService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/exam-rooms")
+@RequestMapping("/api/rooms")
 public class ExamRoomController {
-
     private final ExamRoomService examRoomService;
 
     public ExamRoomController(ExamRoomService examRoomService) {
@@ -17,17 +16,12 @@ public class ExamRoomController {
     }
 
     @PostMapping
-    public ExamRoom addRoom(@RequestBody ExamRoom examRoom) {
-        return examRoomService.addRoom(examRoom);
+    public ResponseEntity<ExamRoom> add(@RequestBody ExamRoom room) {
+        return ResponseEntity.ok(examRoomService.addRoom(room));
     }
 
     @GetMapping
-    public List<ExamRoom> getAllRooms() {
-        return examRoomService.getAllRooms();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteRoom(@PathVariable Long id) {
-        examRoomService.delete(id);
+    public ResponseEntity<List<ExamRoom>> list() {
+        return ResponseEntity.ok(examRoomService.getAllRooms());
     }
 }
