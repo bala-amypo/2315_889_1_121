@@ -11,4 +11,4 @@ public class JwtConfig {
     public JwtTokenProvider jwtTokenProvider() {
         return new JwtTokenProvider("this_is_a_test_secret_key_must_be_long_enough_for_hmac_sha_which_is_long", 3600000);
     }
-}
+}   
