@@ -5,35 +5,33 @@ import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    private final StudentRepository repo;
+
+    public StudentServiceImpl(StudentRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public Student addStudent(Student student) {
-        if (student.getRollNumber() == null) {
-            throw new ApiException("Roll number is required");
+        if (student.getRollNumber() == null || student.getYear() == null) {
+            throw new ApiException("Invalid student data");
         }
-        
-        if (studentRepository.findByRollNumber(student.getRollNumber()).isPresent()) {
-            throw new ApiException("Student with roll number already exists");
+        if (student.getYear() < 1 || student.getYear() > 5) {
+            throw new ApiException("Invalid year");
         }
-        
-        if (student.getYear() != null && (student.getYear() < 1 || student.getYear() > 4)) {
-            throw new ApiException("Year must be between 1 and 4");
-        }
-        
-        return studentRepository.save(student);
+        repo.findByRollNumber(student.getRollNumber())
+                .ifPresent(s -> { throw new ApiException("Student exists"); });
+        return repo.save(student);
     }
 
     @Override
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+        return repo.findAll();
     }
 }

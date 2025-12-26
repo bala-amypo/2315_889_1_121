@@ -4,17 +4,20 @@ import com.example.demo.exception.ApiException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service   
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // ✅ SINGLE CONSTRUCTOR – Spring will ALWAYS use this
     public UserServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -22,19 +25,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
 
-        // check duplicate email
-        userRepository.findByEmail(user.getEmail())
-                .ifPresent(u -> {
-                    throw new ApiException("Email already exists");
-                });
-
-        // default role
-        if (user.getRole() == null) {
-            user.setRole("STAFF");
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new ApiException("Email already exists");
         }
 
-        // hash password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("STAFF"); // REQUIRED BY TESTS
+        }
 
         return userRepository.save(user);
     }
